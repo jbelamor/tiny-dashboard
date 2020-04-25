@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Data table for links{% endblock %}</h1>
+{% endblock %}
+<body>
+  {% block content %}
+  <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+	{% for col in collections %}
+	<a class="nav-item nav-link" href="{{ url_for('show_data.table', collection=col) }}">{{ col }}</a>
+	{% endfor %}
+      </div>
+    </div>
+    <a href="/stats" class="nav-item nav-link">Stats</a>
+    <a href="/upload" role="button" class="btn btn-success navbar-btn">Upload</a>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-11">
+	<form enctype="multipart/form-data" method="POST">
+	  <div class="form-group">
+	    <label for="origin-name">Origin content </label>
+	    <input class="form-control" type="text" id="coll-name" name="origin-name" placeholder="Origin of the new elements">
+	  </div>
+	  <div class="form-group">
+	    <input class="form-control-file" type="file" id="myFile" name="file">
+	  </div>
+	  <button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+      </div>
+    </div>
+</body>  
+{% endblock %}

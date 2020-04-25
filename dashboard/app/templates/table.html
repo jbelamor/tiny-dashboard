@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Data table for links{% endblock %}</h1>
+{% endblock %}
+
+  {% block content %}
+  <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+	{% for col in collections %}
+	<a class="nav-item nav-link" href="{{ url_for('show_data.table', collection=col) }}">{{ col }}</a>
+	{% endfor %}
+      </div>
+    </div>
+    <a href="/stats" class="nav-item nav-link">Stats</a>
+    <a href="/upload" role="button" class="btn btn-success navbar-btn">Upload</a>
+  </nav>
+
+  {% block filter %}
+  {% endblock %}
+  
+  <table class="table table-hover">
+    <thead class="thead-dark">
+      <tr>
+	{% for key in keys %}
+	<th scope="col">{{ key }}</th>
+	{% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for elem in elems %}
+      <tr class="clickable-row" href="/{{ collection }}/{{ elem['_id'] }}">
+	{% for key in keys %}
+	<td class="{{ key }}">{{ elem[key] }}</td>
+	{% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

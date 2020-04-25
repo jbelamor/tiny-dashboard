@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Data table for links{% endblock %}</h1>
+{% endblock %}
+
+<body>
+  {% block content %}
+  <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+	{% for col in collections %}
+	<a class="nav-item nav-link" href="{{ url_for('show_data.table', collection=col) }}">{{ col }}</a>
+	{% endfor %}
+      </div>
+    </div>
+    <a href="/stats" class="nav-item nav-link">Stats</a>
+    <a href="/upload" role="button" class="btn btn-success navbar-btn">Upload</a>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="col-11">
+      {% for col, val in data.items() %}
+      <div class="row">
+	<p>{{ col }}: {{ val }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</body>  
+  
+{% endblock %}

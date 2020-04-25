@@ -1,0 +1,6 @@
+pymongo
+requests
+termcolor
+requests_html
+flask
+flask_pymongo

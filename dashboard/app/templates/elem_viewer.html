@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Data table for links{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<body>  
+  <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+	{% for col in collections %}
+	<a class="nav-item nav-link" href="{{ url_for('show_data.table', collection=col) }}">{{ col }}</a>
+	{% endfor %}
+      </div>
+    </div>
+    <a href="/stats" class="nav-item nav-link">Stats</a>
+    <a href="/upload" role="button" class="btn btn-success navbar-btn">Upload</a>
+  </nav>
+  
+  {% block filter %}
+  {% endblock %}
+
+  {% if alert == True %}
+  <script>alert("{{ message }}")</script>
+  {% endif %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-9">
+	<form method="POST">
+	  {% for key, val in elem_data.items() %}
+	  <div class="form-group">
+      	    <label for="{{ key }}-name">{{ key }}</label>
+	    {% if val is boolean %}
+	    <select id="{{ key }}-name" class="form-control col-1" name="{{ key }}">
+	      <option>{{ val }}</option>
+	      <option>{{ not val }}</option>
+	    </select>
+	    {% elif val is not number and 'https://' in val %}
+	    <div class="row">
+	      <div class="col-10">
+		<textarea class="form-control" rows="2" id="{{ key }}-name" name="{{ key }}">{{ val }}</textarea>
+	      </div>
+	      <div class="col-2">
+		<a href="{{ val }}" target="_blank"><i class="fas fa-external-link-alt" style="font-size:24px"></i></a>
+		<!-- <i class="fab fa-500px"></i> -->
+	      </div>
+	    </div>
+	    {% else %}
+	    <textarea class="form-control col-4" rows="1" id="{{ key }}-name" name="{{ key }}">{{ val }}</textarea>
+	    {% endif %}
+	  </div>
+	  {% endfor %}
+	  <button type="submit" class="btn btn-success">Update</button>
+	  <button type="button" class="btn btn-danger" data-target="#myModal" data-toggle="modal">Delete</button>
+	</form>
+      </div>
+      
+      <div class="modal" tabindex="-1" role="dialog" id="myModal">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+	    <div class="modal-header">
+              <h5 class="modal-title">Delete element</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+              </button>
+	    </div>
+	    <div class="modal-body">
+              <p>Are you sure you want to delete this element?</p>
+	      <p>{{ elem_data['_id']}}</p>
+	    </div>
+	    <div class="modal-footer">
+	      <form action="/{{ collection }}/{{ elem_data['_id'] }}/delete" method="POST">
+		<button type="submit" class="btn btn-danger">Fuck yeah!</button>
+		<button type="button" class="btn btn-secondary" data-dismiss="modal">Oh shit! No!</button>
+	      </form>
+	    </div>
+	  </div>
+	</div>
+      </div>
+    </div>
+  </div>
+</body>
+{% endblock %}
