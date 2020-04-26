@@ -12,9 +12,9 @@ if [[ $# -eq 1 && $1 == '--no-docker' ]]
 		run_server
 fi
 
-if [ `docker ps -f name=mongodb | wc -l` -eq 1 ]
+if [ `docker ps -f name=mongodb | wc -l` -ne 1 ]
 	then
-		docker run -d -v `pwd`/firebase_backup.mongo:/data/db --name mongodb -p 27017-27019:27017-27019 mongo; docker ps --quiet
+		docker run -d -v `pwd`/database:/data/db --name mongodb -p 27017-27019:27017-27019 mongo; docker ps --quiet
 fi
 run_server
 
