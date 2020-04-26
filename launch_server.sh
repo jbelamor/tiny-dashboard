@@ -1,6 +1,6 @@
-
+#! /bin/bash
 run_server () {
-	export FLASK_APP=app
+	export FLASK_APP=tiny-dashboard
 	export FLASK_ENV=development
 	cd dashboard
 	flask run

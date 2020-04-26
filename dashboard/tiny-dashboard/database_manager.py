@@ -1,5 +1,6 @@
 import pymongo
 import config
+from bson.objectid import ObjectId
 
 class DB(object):
     def get_database():

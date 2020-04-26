@@ -12,8 +12,10 @@
 	<a class="nav-item nav-link" href="{{ url_for('show_data.table', collection=col) }}">{{ col }}</a>
 	{% endfor %}
       </div>
+	  <div class="navbar-nav ml-auto">
+		<a href="/stats" role="button" class="btn btn-info navbar-btn">Stats</a>
+	  </div>
     </div>
-    <a href="/stats" class="nav-item nav-link">Stats</a>
   </nav>
 
   {% block filter %}
@@ -29,10 +31,18 @@
     </thead>
     <tbody>
       {% for elem in elems %}
-      <tr class="clickable-row" href="/{{ collection }}/{{ elem['_id'] }}">
-	{% for key in keys %}
-	<td class="{{ key }}">{{ elem[key] }}</td>
-	{% endfor %}
+	  {% if is_objectid(elem['_id']) is true %}
+	  <tr class="clickable-row" href="/{{ collection }}/{{ elem['_id']|string + "?objectid=1" }}">
+		{% else %}
+	  <tr class="clickable-row" href="/{{ collection }}/{{ elem['_id'] }}">
+		{% endif %}
+		{% for key in keys %}
+		{% if key == '_id' and objectid is true %}
+		<td class="{{ key }}">{{ "ObjectId('" + elem[key]|string +"')" }}</td>
+		{% else %}
+				<td class="{{ key }}">{{ elem[key] }}</td>
+		{% endif %}
+		{% endfor %}
       </tr>
       {% endfor %}
     </tbody>

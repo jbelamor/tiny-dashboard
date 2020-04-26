@@ -13,9 +13,10 @@
 	<a class="nav-item nav-link" href="{{ url_for('show_data.table', collection=col) }}">{{ col }}</a>
 	{% endfor %}
       </div>
+	  <div class="navbar-nav ml-auto">
+		<a href="/stats" role="button" class="btn btn-info navbar-btn">Stats</a>
+	  </div>
     </div>
-    <a href="/stats" class="nav-item nav-link">Stats</a>
-    <a href="/upload" role="button" class="btn btn-success navbar-btn">Upload</a>
   </nav>
   
   {% block filter %}
@@ -36,7 +37,7 @@
 	      <option>{{ val }}</option>
 	      <option>{{ not val }}</option>
 	    </select>
-	    {% elif val is not number and 'https://' in val %}
+	    {% elif val is not number and 'https://' in val|string %}
 	    <div class="row">
 	      <div class="col-10">
 		<textarea class="form-control" rows="2" id="{{ key }}-name" name="{{ key }}">{{ val }}</textarea>

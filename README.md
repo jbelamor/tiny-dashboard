@@ -3,13 +3,18 @@
 A dashboard to view and modify the data from a mongo database.
 
 ## Instalation
+First steps
+```
+git clone https://github.com/jbelamor/tiny-dashboard.git
+cd tiny-dashboard
+```
 
 ### Using virtual enviroments
 Use virtual enviroments to install the requiremnts:
 ```
-pip3 install --user venv
-python3 -m venv dashboard
-source ./dashboard/bin/activate
+pip3 install --user virtualenv
+virtualenv --python=python3 .env
+source .env/bin/activate
 ```
 
 ### Common part
@@ -44,4 +49,3 @@ chmod +x launch_server.sh
 chmod +x launch_server.sh
 ./launch_server.sh
 ```
-

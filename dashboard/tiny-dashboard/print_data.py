@@ -1,4 +1,4 @@
-import functools
+from bson.objectid import ObjectId
 
 from flask import (
     Blueprint, render_template, request, url_for, request, redirect)
@@ -23,9 +23,11 @@ def graphs():
 
 @bp.route('/<collection>')
 def table(collection):
+    def is_objectid(value):
+        return type(value) is ObjectId
     collections = DB.get_collections()
     if collection not in collections:
-	return redirec('/stats')
+        return redirect('/stats')
     template_to_render = 'table.html'
     return render_template(
         template_to_render,
@@ -33,13 +35,15 @@ def table(collection):
         collection = collection,
         keys = DB.get_keys_coll(collection, {}, {'visible': 0}),
         elems = DB.get_all_data_collection(collection, {'visible':{'$ne': False}}, {'visible': 0}),
-        )
+        is_objectid = is_objectid,
+    )
 
 @bp.route('/<collection>/<elem_id>', methods=['GET', 'POST'])
 def view_element(collection, elem_id):
+    objectid = request.args.get('objectid', default = 0)
+    elem_id = ObjectId(elem_id) if objectid else elem_id
     collections = DB.get_collections()
     if request.method == 'GET':
-        print(DB.get_one_elem(collection, {'_id': elem_id}, {'visible': 0}))
         return render_template(
             'elem_viewer.html',
             collection = collection,

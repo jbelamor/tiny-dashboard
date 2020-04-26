@@ -13,9 +13,10 @@
 	<a class="nav-item nav-link" href="{{ url_for('show_data.table', collection=col) }}">{{ col }}</a>
 	{% endfor %}
       </div>
-    </div>
-    <a href="/stats" class="nav-item nav-link">Stats</a>
-    <a href="/upload" role="button" class="btn btn-success navbar-btn">Upload</a>
+	  <div class="navbar-nav ml-auto">
+		<a href="/stats" role="button" class="btn btn-info navbar-btn">Stats</a>
+	  </div>
+	</div>
   </nav>
 
   <div class="container-fluid">
