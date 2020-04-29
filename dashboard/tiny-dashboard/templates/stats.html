@@ -23,7 +23,7 @@
     <div class="col-11">
       {% for col, val in data.items() %}
       <div class="row">
-	<p>{{ col }}: {{ val }}</p>
+		<p><a href="/{{ col }}">{{ col }}</a>: {{ val }}</p>
       </div>
       {% endfor %}
     </div>
